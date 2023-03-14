@@ -1,39 +1,210 @@
 {
-    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-    "id": "e43f8917-45f8-45f7-a7ba-cc13fb1b5f83",
-    "name": "commitIdTask",
-    "friendlyName": "commit id shown in task",
-    "description": "",
-    "helpMarkDown": "",
-    "category": "Utility",
-    "author": "prabu",
-    "version": {
-        "Major": 0,
-        "Minor": 1,
-        "Patch": 0
-    },
-    "instanceNameFormat": "",
-    "inputs": [
-        {
-            "name": "CommitId",
-            "type": "string",
-            "label": "",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "A sample string"
-        },
-        {
-            "name": "Index",
-            "type": "string",
-            "label": "Index",
-            "defaultValue": "",
-            "required": true,
-            "helpMarkDown": "A sample string"
-        }
-    ],
-    "execution": {
-        "Node": {
-            "target": "index.js"
-        }
-    }
-    }
+    "$schema":  "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id":  "45ce496f-61d2-4a9f-af71-3acdb11c4d96",
+    "name":  "sendmailthroughtask",
+    "friendlyName":  "send mail through task",
+    "description":  "create new plugin send mail",
+    "helpMarkDown":  "",
+    "category":  "Utility",
+    "author":  "prabuazure",
+    "version":  {
+                    "Major":  0,
+                    "Minor":  1,
+                    "Patch":  0
+                },
+    "instanceNameFormat":  "Task send Email",
+    "groups":  [
+                   {
+                       "name":  "email",
+                       "displayName":  "Email Outline",
+                       "isExpanded":  true
+                   },
+                   {
+                       "name":  "smtpsettings",
+                       "displayName":  "SMTP Settings",
+                       "isExpanded":  true
+                   }
+               ],
+    "inputs":  [
+                   {
+                       "name":  "CommitID",
+                       "type":  "string",
+                       "label":  "CommitID",
+                       "defaultValue":  "6c6a2dd3545aa2d2185264aa31e02fbbbf067f48",
+                       "required":  true,
+                       "groupName":  "email",
+                       "helpMarkDown":  "Latest Commit ID shown Here"
+                   },
+                   {
+                       "name":  "To",
+                       "type":  "string",
+                       "label":  "To Addresses",
+                       "defaultValue":  "",
+                       "required":  true,
+                       "groupName":  "email",
+                       "helpMarkDown":  "To Addresses. Separate by semicolon (;)"
+                   },
+                   {
+                       "name":  "Choose",
+                       "type":  "radio",
+                       "label":  "Select",
+                       "defaultValue":  "CC",
+                       "required":  false,
+                       "groupName":  "email",
+                       "helpMarkDown":  "Select to add a value",
+                       "options":  {
+                                       "CC":  "CC",
+                                       "BCC":  "BCC",
+                                       "From":  "From",
+                                       "Subject":  "Subject"
+                                   }
+                   },
+                   {
+                       "name":  "CC",
+                       "type":  "string",
+                       "label":  "CC Addresses",
+                       "visibleRule":  "Choose == CC",
+                       "defaultValue":  "",
+                       "required":  false,
+                       "groupName":  "email",
+                       "helpMarkDown":  "CC Addresses. Separate by semicolon (;)"
+                   },
+                   {
+                       "name":  "BCC",
+                       "type":  "string",
+                       "label":  "BCC Addresses",
+                       "visibleRule":  "Choose == BCC",
+                       "defaultValue":  "",
+                       "required":  false,
+                       "groupName":  "email",
+                       "helpMarkDown":  "BCC Addresses. Separate by semicolon (;)"
+                   },
+                   {
+                       "name":  "From",
+                       "type":  "string",
+                       "label":  "From Address",
+                       "defaultValue":  "",
+                       "visibleRule":  "Choose == From",
+                       "required":  true,
+                       "groupName":  "email",
+                       "helpMarkDown":  "From Address"
+                   },
+                   {
+                       "name":  "Subject",
+                       "type":  "string",
+                       "label":  "Mail Subject",
+                       "visibleRule":  "Choose == Subject",
+                       "defaultValue":  "",
+                       "required":  true,
+                       "groupName":  "email",
+                       "helpMarkDown":  "The subject of the email"
+                   },
+                   {
+                       "name":  "Body",
+                       "type":  "multiLine",
+                       "label":  "Mail Body",
+                       "defaultValue":  "",
+                       "required":  false,
+                       "groupName":  "email",
+                       "helpMarkDown":  "The body of the email",
+                       "properties":  {
+                                          "resizable":  true,
+                                          "rows":  "20"
+                                      }
+                   },
+                   {
+                       "name":  "BodyAsHtml",
+                       "type":  "boolean",
+                       "label":  "Is HTML Body?:",
+                       "defaultValue":  "false",
+                       "required":  true,
+                       "groupName":  "email",
+                       "helpMarkDown":  "Indicate if the text in the Body is HTML formatted"
+                   },
+                   {
+                       "name":  "AddAttachment",
+                       "type":  "boolean",
+                       "label":  "Add Attachment?:",
+                       "defaultValue":  "false",
+                       "required":  true,
+                       "groupName":  "email",
+                       "helpMarkDown":  "Indicate if a file will be attached to the email"
+                   },
+                   {
+                       "name":  "Attachment",
+                       "type":  "string",
+                       "label":  "Attachment (absolute path)",
+                       "defaultValue":  "",
+                       "required":  false,
+                       "groupName":  "email",
+                       "helpMarkDown":  "The absolute path to the file"
+                   },
+                   {
+                       "name":  "reasonmail",
+                       "type":  "string",
+                       "label":  "Reason Mail",
+                       "required":  false,
+                       "defaultValue":  "",
+                       "helpMarkDown":  "To Reason for a Mail",
+                       "groupName":  "email"
+                   },
+                   {
+                       "name":  "SmtpServer",
+                       "type":  "string",
+                       "label":  "SMTP Server",
+                       "defaultValue":  "",
+                       "required":  false,
+                       "groupName":  "smtpsettings",
+                       "helpMarkDown":  "Name or IP Address of a SMTP server"
+                   },
+                   {
+                       "name":  "SmtpPort",
+                       "type":  "string",
+                       "label":  "SMTP Port",
+                       "defaultValue":  "587",
+                       "required":  false,
+                       "groupName":  "smtpsettings",
+                       "helpMarkDown":  "Port to the SMTP server"
+                   },
+                   {
+                       "name":  "SmtpUsername",
+                       "type":  "string",
+                       "label":  "SMTP Username",
+                       "defaultValue":  "",
+                       "required":  false,
+                       "groupName":  "smtpsettings",
+                       "helpMarkDown":  "Username for the SMTP server"
+                   },
+                   {
+                       "name":  "SmtpPassword",
+                       "type":  "string",
+                       "label":  "SMTP Password",
+                       "defaultValue":  "",
+                       "required":  false,
+                       "groupName":  "smtpsettings",
+                       "helpMarkDown":  "Password for the SMTP server"
+                   },
+                   {
+                       "name":  "UseSSL",
+                       "type":  "boolean",
+                       "label":  "SMTP Use SSL?",
+                       "defaultValue":  "true",
+                       "required":  false,
+                       "groupName":  "smtpsettings",
+                       "helpMarkDown":  "Indication whether to use SSL for connecting to the SMTP server"
+                   }
+               ],
+    "execution":  {
+                      "PowerShell3":  {
+                                          "target":  "$(currentDirectory)\\SendMail.ps1",
+                                          "argumentFormat":  "",
+                                          "workingDirectory":  "$(currentDirectory)"
+                                      },
+                      "PowerShell3":  {
+                                        "target":  "$(currentDirectory)\\classiccommit.ps1",
+                                        "argumentFormat":  "",
+                                        "workingDirectory":  "$(currentDirectory)"
+                                      }               
+
+                  }
+}
