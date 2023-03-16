@@ -141,8 +141,12 @@
                    },
                    {
                        "name":  "reasonmail",
-                       "type":  "string",
+                       "type":  "pickList",
                        "label":  "Reason Mail",
+                       "options": {   
+                        "Error thrown":"Error",
+                        "Successfull":"Deploy Successfull"
+                    },
                        "required":  false,
                        "defaultValue":  "",
                        "helpMarkDown":  "To Reason for a Mail",
